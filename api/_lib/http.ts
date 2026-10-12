@@ -1,6 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import jwt from "jsonwebtoken";
 import { connectDB } from "./db.js";
+import { User } from "./models.js";
 
 const COOKIE = "session";
 const MAX_AGE = 60 * 60 * 24 * 7; // 7 dias
@@ -55,7 +56,10 @@ export function route(handler: Handler, opts: { public?: boolean } = {}) {
       let userId = "";
       if (!opts.public) {
         const id = getUserId(req);
-        if (!id) return res.status(401).json({ error: "Não autenticado" });
+        // a sessão só vale enquanto o professor existir (remover um professor corta o acesso na hora)
+        if (!id || !(await User.exists({ _id: id }))) {
+          return res.status(401).json({ error: "Não autenticado" });
+        }
         userId = id;
       }
       await handler(req, res, { userId });

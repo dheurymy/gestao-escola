@@ -6,7 +6,7 @@ Funciona no **celular e no computador**, pode ser adicionado à tela inicial com
 
 ## Funcionalidades
 
-- **Login** por usuário e senha. Não existe cadastro público: as contas dos professores são criadas por quem administra o sistema.
+- **Login** por usuário e senha. Não existe cadastro público: um professor já logado cadastra os outros na aba **Professores** (nome, usuário e senha de pelo menos 8 caracteres) e também pode remover um colega. Quem é removido perde o acesso na hora, e ninguém consegue remover a si mesmo.
 - **Alunos:** nome, foto, data de nascimento (a idade é calculada), escola, responsável, telefone do responsável e observações. Alunos podem ser marcados como inativos (somem da chamada, mas o histórico é mantido) ou excluídos.
 - **Chamada:** escolha a data e um dos 5 horários e toque no aluno para marcar a presença. A tela atualiza na hora e desfaz a marcação se o servidor recusar.
 - **Relatórios:**
@@ -51,10 +51,11 @@ api/
   _lib/            conexão com o banco, modelos, autenticação e utilitários
   auth/            login, logout e me (usuário logado)
   students/        listagem/cadastro e consulta/edição/exclusão de alunos
+  users/           listagem, cadastro e remoção de professores
   attendance/      consulta e marcação de presenças
 shared/            tipos e lista de horários usados por front-end e API
 src/
-  pages/           Login, Chamada, Alunos, Formulário do aluno, Relatórios
+  pages/           Login, Chamada, Alunos, Formulário do aluno, Relatórios, Professores
   components/      Avatar, navegação de datas
   api.ts           cliente das rotas da API
   dates.ts         utilitários de datas (fuso local)
@@ -80,6 +81,9 @@ Todas as rotas, exceto login e logout, exigem login.
 | POST | `/api/auth/login` | Entra com `username` e `password` |
 | POST | `/api/auth/logout` | Encerra a sessão |
 | GET | `/api/auth/me` | Dados do usuário logado |
+| GET | `/api/users` | Lista os professores (nunca devolve a senha) |
+| POST | `/api/users` | Cadastra um professor: `{ name, username, password }` |
+| DELETE | `/api/users/:id` | Remove um professor (exceto a si mesmo) |
 | GET | `/api/students` | Lista os alunos |
 | POST | `/api/students` | Cadastra um aluno |
 | GET / PUT / DELETE | `/api/students/:id` | Consulta, edita ou exclui (e apaga o histórico dele) |
@@ -169,7 +173,7 @@ No celular, abra o endereço do site e use *Adicionar à tela inicial* para inst
 
 - **Só presença:** a falta é a ausência de registro. Não há "falta justificada".
 - **Sem turno fixo por aluno:** a chamada lista todos os alunos ativos em qualquer horário.
-- **Todos os professores veem todos os alunos** e podem marcar presença.
+- **Todos os professores têm o mesmo nível de acesso:** veem todos os alunos, marcam presença e cadastram ou removem outros professores. Não há perfil de administrador.
 - **Idade calculada** a partir da data de nascimento, para nunca ficar desatualizada.
 - **Datas em texto `AAAA-MM-DD`** no fuso local, para evitar erros de fuso horário.
 
@@ -178,5 +182,5 @@ No celular, abra o endereço do site e use *Adicionar à tela inicial* para inst
 - Registrar faltas e justificativas
 - Turno fixo por aluno e filtro da chamada por turma
 - Gráficos de frequência e alertas de ausências seguidas
-- Perfis de acesso (administrador × professor)
+- Perfis de acesso (administrador × professor) e troca de senha pelo próprio professor
 - Funcionamento offline (service worker)

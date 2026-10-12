@@ -27,6 +27,11 @@ export const api = {
     request<User>("POST", "/api/auth/login", { username, password }),
   logout: () => request<{ ok: true }>("POST", "/api/auth/logout"),
 
+  teachers: () => request<User[]>("GET", "/api/users"),
+  createTeacher: (t: { name: string; username: string; password: string }) =>
+    request<User>("POST", "/api/users", t),
+  deleteTeacher: (id: string) => request<{ ok: true }>("DELETE", `/api/users/${id}`),
+
   students: () => request<Student[]>("GET", "/api/students"),
   student: (id: string) => request<Student>("GET", `/api/students/${id}`),
   createStudent: (s: StudentInput) => request<Student>("POST", "/api/students", s),

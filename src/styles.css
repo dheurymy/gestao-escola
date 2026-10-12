@@ -361,6 +361,14 @@ tr.inactive td { opacity: 0.55; }
 .timeline b { font-weight: 700; color: var(--ink); font-size: 0.875rem; }
 .timeline span { color: var(--mute); font-size: 0.75rem; }
 
+/* ───────── Professores ───────── */
+.subform { display: grid; gap: 16px; padding: 24px; margin-bottom: 24px; background: var(--surface-card); border-radius: var(--r-md); }
+.subform .field input:not([type="checkbox"]) { background: var(--canvas); }
+.hint { font-size: 0.8125rem; color: var(--mute); }
+.notice.success { background: var(--success-pale); color: var(--success-deep); }
+.row.static:active { background: var(--surface-card); transform: none; }
+.tag { margin-left: 8px; padding: 2px 8px; border-radius: var(--r-full); background: var(--canvas); color: var(--mute); font-size: 0.75rem; font-weight: 600; vertical-align: 1px; }
+
 /* ───────── Movimento ───────── */
 @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 .page > *, .login-main > * { animation: rise 0.35s var(--ease) both; }

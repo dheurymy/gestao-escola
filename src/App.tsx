@@ -7,6 +7,7 @@ import Attendance from "./pages/Attendance";
 import Students from "./pages/Students";
 import StudentForm from "./pages/StudentForm";
 import Reports from "./pages/Reports";
+import Teachers from "./pages/Teachers";
 
 function Shell() {
   const { user, loading, logout } = useAuth();
@@ -36,6 +37,10 @@ function Shell() {
             <NavLink to="/relatorios">
               <Icon name="chart" />
               Relatórios
+            </NavLink>
+            <NavLink to="/professores">
+              <Icon name="teacher" />
+              Professores
             </NavLink>
           </nav>
           <div className="userbox">
@@ -80,6 +85,7 @@ export default function App() {
         <Route path="/alunos/novo" element={<StudentForm />} />
         <Route path="/alunos/:id" element={<StudentForm />} />
         <Route path="/relatorios" element={<Reports />} />
+        <Route path="/professores" element={<Teachers />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
