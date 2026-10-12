@@ -1,3 +1,6 @@
+import Icon from "./Icon";
+
+/** Título do período com setas de anterior/próximo; `children` entra ao lado dos botões. */
 export default function DateNav({
   label,
   onPrev,
@@ -10,17 +13,17 @@ export default function DateNav({
   children?: React.ReactNode;
 }) {
   return (
-    <div className="datenav">
-      <button className="btn icon" onClick={onPrev} aria-label="Anterior">
-        ‹
-      </button>
-      <div className="datenav-label">
-        <div>{label}</div>
-        {children}
+    <div className="period-nav">
+      <h2 className="h2">{label}</h2>
+      {children}
+      <div className="btns">
+        <button className="btn icon sm" onClick={onPrev} aria-label="Período anterior">
+          <Icon name="prev" size={18} />
+        </button>
+        <button className="btn icon sm" onClick={onNext} aria-label="Próximo período">
+          <Icon name="next" size={18} />
+        </button>
       </div>
-      <button className="btn icon" onClick={onNext} aria-label="Próximo">
-        ›
-      </button>
     </div>
   );
 }

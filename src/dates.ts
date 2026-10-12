@@ -59,3 +59,19 @@ export function ageFrom(birthDate: string) {
   if (n.getMonth() < b.getMonth() || (n.getMonth() === b.getMonth() && n.getDate() < b.getDate())) age--;
   return age;
 }
+
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+/** "Segunda-feira" e "12 de outubro" separados, para compor títulos. */
+export function dayTitle(iso: string) {
+  const d = fromISO(iso);
+  return {
+    weekday: cap(d.toLocaleDateString("pt-BR", { weekday: "long" })),
+    rest: d.toLocaleDateString("pt-BR", { day: "numeric", month: "long" }),
+  };
+}
+
+export const weekdayShort = (iso: string) =>
+  fromISO(iso).toLocaleDateString("pt-BR", { weekday: "short" }).replace(".", "");
+export const isWeekend = (iso: string) => [0, 6].includes(fromISO(iso).getDay());
+export const capitalize = cap;
